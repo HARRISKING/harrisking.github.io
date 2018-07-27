@@ -1,0 +1,940 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Roboto Slab:300,300italic,400,400italic,700,700italic|Roboto Slab:300,300italic,400,400italic,700,700italic|Roboto Slab:300,300italic,400,400italic,700,700italic|Roboto Slab:300,300italic,400,400italic,700,700italic|PT Mono:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="算法," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="前端算法虽然简单，但是思路还是很值得学习的，而且面对程序越来越复杂的当下，掌握算法，有益无害，特总结如下，以备后查！ 狗熊掰玉米法（冒泡法）需求是几根玉米从短到长排列。狗熊先拿起第一个放在手中，去跟第二个比，如果大于第二个，就比较第三个，否则就放下第一个，拿起第二个，直到比较了所有，这是，手中的肯定是最大的，并把它放在最后。以此类推。">
+<meta name="keywords" content="算法">
+<meta property="og:type" content="article">
+<meta property="og:title" content="排序算法——BAT必考">
+<meta property="og:url" content="http://www.liliancheng.top/2018/07/27/排序算法——BAT必考/index.html">
+<meta property="og:site_name" content="HARRISKING`s Blog">
+<meta property="og:description" content="前端算法虽然简单，但是思路还是很值得学习的，而且面对程序越来越复杂的当下，掌握算法，有益无害，特总结如下，以备后查！ 狗熊掰玉米法（冒泡法）需求是几根玉米从短到长排列。狗熊先拿起第一个放在手中，去跟第二个比，如果大于第二个，就比较第三个，否则就放下第一个，拿起第二个，直到比较了所有，这是，手中的肯定是最大的，并把它放在最后。以此类推。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3706166-44d9dbda0eb28df8?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2018-07-27T06:21:33.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="排序算法——BAT必考">
+<meta name="twitter:description" content="前端算法虽然简单，但是思路还是很值得学习的，而且面对程序越来越复杂的当下，掌握算法，有益无害，特总结如下，以备后查！ 狗熊掰玉米法（冒泡法）需求是几根玉米从短到长排列。狗熊先拿起第一个放在手中，去跟第二个比，如果大于第二个，就比较第三个，否则就放下第一个，拿起第二个，直到比较了所有，这是，手中的肯定是最大的，并把它放在最后。以此类推。">
+<meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/3706166-44d9dbda0eb28df8?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://www.liliancheng.top/2018/07/27/排序算法——BAT必考/"/>
+
+
+
+
+
+  <title>排序算法——BAT必考 | HARRISKING`s Blog</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+    <a href="https://github.com/HARRISKING"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub"></a>
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">HARRISKING`s Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">Techblog & Experience</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            时间轴
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            站长介绍
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-search">
+          <a href="/search" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-search"></i> <br />
+            
+            站内搜索
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://www.liliancheng.top/2018/07/27/排序算法——BAT必考/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="LiLiancheng">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/a2.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="HARRISKING`s Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">排序算法——BAT必考</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-07-27T14:15:33+08:00">
+                2018-07-27
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/面试相关/" itemprop="url" rel="index">
+                    <span itemprop="name">面试相关</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><img src="http://upload-images.jianshu.io/upload_images/3706166-44d9dbda0eb28df8?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""><br>前端算法虽然简单，但是思路还是很值得学习的，而且面对程序越来越复杂的当下，掌握算法，有益无害，特总结如下，以备后查！</p>
+<h1 id="狗熊掰玉米法（冒泡法）"><a href="#狗熊掰玉米法（冒泡法）" class="headerlink" title="狗熊掰玉米法（冒泡法）"></a>狗熊掰玉米法（冒泡法）</h1><p>需求是几根玉米从短到长排列。<br>狗熊先拿起第一个放在手中，去跟第二个比，如果大于第二个，就比较第三个，否则就放下第一个，拿起第二个，直到比较了所有，这是，手中的肯定是最大的，并把它放在最后。以此类推。<br><a id="more"></a></p>
+<pre><code>//冒泡函数：
+function bubble(arr){
+    for (let n=0; n&lt; arr.length-1; n++){
+        for(let m=0; m&lt;arr.length-n-1;m++){
+            if(arr[m]&gt;arr[m+1]){
+                conversion(arr,m,m+1)
+            }
+        }
+    }
+    return arr;
+}
+//交换函数：
+function swap(array,po1,po2){
+    let po = array[po1];
+    array[po1] = array[po2];
+    array[po2] = po;
+}
+</code></pre><h1 id="教官排位置法（选择排序法）"><a href="#教官排位置法（选择排序法）" class="headerlink" title="教官排位置法（选择排序法）"></a>教官排位置法（选择排序法）</h1><p>需求是几个人从小到大站队。<br>教官先找最小的放在第一位，于是，记住现在第一个人的身高去跟后面的每一个比个，一旦发现有更矮的，就记住这个更矮的，继续比，直到找到最矮，并把最矮的和第一位的人换位置，以此类推。</p>
+<pre><code>//选择排序法:
+let array1 = [2,34,2,3,5,256,7,4,23,2,34,213,12,4125,6];
+function selectionSort(arr){
+    for(let n=0; n&lt;arr.length-1; n++){
+        let min = arr[n];
+        let idx = n;
+
+        for(let m=n+1; m&lt;arr.length+n; m++){
+            if(min&gt;arr[m]){
+                min = arr[m];
+                idx = m;
+            }
+        }
+        swap(arr,n,idx);
+    }
+    return arr;
+}
+//交换函数：
+function swap(array,a1,a2){
+    var a = array[a1];
+    array[a1] = array[a2];
+    array[a2] = a;
+    return array;
+}
+console.log(array1)
+console.log(selectionSort(array1));
+</code></pre><h1 id="摸牌法（插入法）"><a href="#摸牌法（插入法）" class="headerlink" title="摸牌法（插入法）"></a>摸牌法（插入法）</h1><p>需求是牌从小到大排列。<br>开始摸牌，第二张和第一张比，如果大于第一张，就放在后面，否则放前面。摸第三张牌，往前找，如果出现比自己小，就放在这张牌后面。以此类推。<br>我的方法：</p>
+<pre><code> let array1 = [2,34,2,3,5,256,7,4,23,2,34,213,12,4125,6];
+
+ //摸牌法
+ function insertionSort(arr){
+     for(let i=1; i&lt;arr.length; i++){
+         for(let j=0; j&lt;i; j++){
+             if(arr[i]&lt;arr[j]){
+                 swap(arr,i,j);
+             }
+         }
+     }
+     return arr;
+ }
+//交换函数：
+ function swap(array,a1,a2){
+     var a = array[a1];
+     array[a1] = array[a2];
+     array[a2] = a;
+     return array;
+ }
+ console.log(array1)
+ console.log(insertionSort(array1));
+</code></pre><p>网上某大神的方法：(甚为精妙)</p>
+<pre><code>function insertionSort(arr){
+    let value,
+        j,
+        i;
+    for(i=0;i&lt;arr.length;i++){
+        value = arr[i];
+        for(j=i-1; j&gt; -1 &amp;&amp; arr[j]&gt;value;j--){
+            arr[j+1] = arr[j];
+        }
+        arr[j+1] = value;
+    }
+    return arr;
+}
+</code></pre><h1 id="领导分配任务法——递归（不会）"><a href="#领导分配任务法——递归（不会）" class="headerlink" title="领导分配任务法——递归（不会）"></a>领导分配任务法——递归（不会）</h1><p>需求是将任务从小到大排列。<br>拿到任务，大领导将任务分给两个主管，每个主管又将自己的任务分给下属，层层分配，最后一级将拿到的两个任务大小进行排序，他的上级同样操作，以此类推。</p>
+<h1 id="快速排序——自私算法（不会）"><a href="#快速排序——自私算法（不会）" class="headerlink" title="快速排序——自私算法（不会）"></a>快速排序——自私算法（不会）</h1><p>需求是从大到小排序。<br>第一个不考虑其他人排序，而是只考虑自己的位置。即我只要找一个位置，这个位置满足前面的都比我小，后面的都比我大，那这个位置就是我的正确位置。以此类推。</p>
+<h1 id="随机算法——解决自私算法bug-同侧为同小或同大时-（不会）"><a href="#随机算法——解决自私算法bug-同侧为同小或同大时-（不会）" class="headerlink" title="随机算法——解决自私算法bug(同侧为同小或同大时)（不会）"></a>随机算法——解决自私算法bug(同侧为同小或同大时)（不会）</h1><p>道理同上，只不过这次不是按照顺序，从第一个开始，依次往下，而是随机的抽取一个，然后去找自己的位置。<br>这样做可以解决同一侧都是比自己大或小的情况，节省时间。</p>
+<h1 id="桶排法"><a href="#桶排法" class="headerlink" title="桶排法"></a>桶排法</h1><p>在排序之前，我先准备几个桶（桶顺序从小到大），然后把相同高度的放在一个桶里，不同高度放在响应的桶里。放好之后在按照桶的顺序一个个拿出来。</p>
+<h1 id="基数排法"><a href="#基数排法" class="headerlink" title="基数排法"></a>基数排法</h1><p>每一位进行比较，放在桶里，在按照从小到大顺序拿出，以此类推。</p>
+<p>#六种思路：（纯自己实现，有bug欢迎提醒）<a href="https://visualgo.net/sorting" target="_blank" rel="noopener">图解排序算法</a></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    
+      <div>
+        <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+    
+</div>
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/算法/" rel="tag"># 算法</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/07/27/sass——css预处理入门笔记/" rel="next" title="sass——css预处理入门笔记">
+                <i class="fa fa-chevron-left"></i> sass——css预处理入门笔记
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/07/27/倾听能力小总结/" rel="prev" title="倾听能力小总结">
+                倾听能力小总结 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8zODM5My8xNDkyMQ=="></div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/a2.jpeg"
+                alt="LiLiancheng" />
+            
+              <p class="site-author-name" itemprop="name">LiLiancheng</p>
+              <p class="site-description motion-element" itemprop="description">知道做不到，等于不知道</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">5</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">4</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.jianshu.com/u/095fb78b6440" target="_blank" title="简书博客">
+                      
+                        <i class="fa fa-fw fa-spinner"></i>简书博客</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/HARRISKING" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#狗熊掰玉米法（冒泡法）"><span class="nav-number">1.</span> <span class="nav-text">狗熊掰玉米法（冒泡法）</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#教官排位置法（选择排序法）"><span class="nav-number">2.</span> <span class="nav-text">教官排位置法（选择排序法）</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#摸牌法（插入法）"><span class="nav-number">3.</span> <span class="nav-text">摸牌法（插入法）</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#领导分配任务法——递归（不会）"><span class="nav-number">4.</span> <span class="nav-text">领导分配任务法——递归（不会）</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#快速排序——自私算法（不会）"><span class="nav-number">5.</span> <span class="nav-text">快速排序——自私算法（不会）</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#随机算法——解决自私算法bug-同侧为同小或同大时-（不会）"><span class="nav-number">6.</span> <span class="nav-text">随机算法——解决自私算法bug(同侧为同小或同大时)（不会）</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#桶排法"><span class="nav-number">7.</span> <span class="nav-text">桶排法</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#基数排法"><span class="nav-number">8.</span> <span class="nav-text">基数排法</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">LiLiancheng</span>
+
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+<script src="/live2dw/lib/L2Dwidget.min.js?0c58a1486de42ac6cc1c59c7d98ae887"></script><script>L2Dwidget.init({"model":"wanko","bottom":-30,"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>
