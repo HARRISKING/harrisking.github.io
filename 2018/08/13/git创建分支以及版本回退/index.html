@@ -118,7 +118,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="git操作," />
 
 
 
@@ -129,16 +129,18 @@
 
 
 
-<meta name="description" content="知道做不到，等于不知道">
-<meta property="og:type" content="website">
-<meta property="og:title" content="HARRISKING`s Blog">
-<meta property="og:url" content="http://www.liliancheng.top/tags/样式表相关/index.html">
+<meta name="description" content="git的一大特点就是可以在一套代码流水线上创建多个分支，这些分支互不影响，但可以在需要时候合并，这对开发者太友好了，具体操作方法整理如下，以备后查！  一，如何创建分支现在我要修一条北京通往杭州的公路（为什么要通往杭州，因为我喜欢），我开始拿着铲子一点一点的修，终于修完了开始通车跑。后来我想把这条路的盘山路优化成通山隧道，但是我不能影响现在的公路正常运行啊，所以我运用魔法在平行世界复制了一条一模">
+<meta name="keywords" content="git操作">
+<meta property="og:type" content="article">
+<meta property="og:title" content="git创建分支以及版本回退">
+<meta property="og:url" content="http://www.liliancheng.top/2018/08/13/git创建分支以及版本回退/index.html">
 <meta property="og:site_name" content="HARRISKING`s Blog">
-<meta property="og:description" content="知道做不到，等于不知道">
+<meta property="og:description" content="git的一大特点就是可以在一套代码流水线上创建多个分支，这些分支互不影响，但可以在需要时候合并，这对开发者太友好了，具体操作方法整理如下，以备后查！  一，如何创建分支现在我要修一条北京通往杭州的公路（为什么要通往杭州，因为我喜欢），我开始拿着铲子一点一点的修，终于修完了开始通车跑。后来我想把这条路的盘山路优化成通山隧道，但是我不能影响现在的公路正常运行啊，所以我运用魔法在平行世界复制了一条一模">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-08-13T11:51:56.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="HARRISKING`s Blog">
-<meta name="twitter:description" content="知道做不到，等于不知道">
+<meta name="twitter:title" content="git创建分支以及版本回退">
+<meta name="twitter:description" content="git的一大特点就是可以在一套代码流水线上创建多个分支，这些分支互不影响，但可以在需要时候合并，这对开发者太友好了，具体操作方法整理如下，以备后查！  一，如何创建分支现在我要修一条北京通往杭州的公路（为什么要通往杭州，因为我喜欢），我开始拿着铲子一点一点的修，终于修完了开始通车跑。后来我想把这条路的盘山路优化成通山隧道，但是我不能影响现在的公路正常运行啊，所以我运用魔法在平行世界复制了一条一模">
 
 
 
@@ -168,13 +170,13 @@
 
 
 
-  <link rel="canonical" href="http://www.liliancheng.top/tags/样式表相关/"/>
+  <link rel="canonical" href="http://www.liliancheng.top/2018/08/13/git创建分支以及版本回退/"/>
 
 
 
 
 
-  <title>标签: 样式表相关 | HARRISKING`s Blog</title>
+  <title>git创建分支以及版本回退 | HARRISKING`s Blog</title>
   
 
 
@@ -193,7 +195,7 @@
     
   
 
-  <div class="container sidebar-position-left ">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
     <a href="https://github.com/HARRISKING"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub"></a>
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -307,82 +309,188 @@
           <div id="content" class="content">
             
 
-  
-  
-  
-  <div class="post-block tag">
+  <div id="posts" class="posts-expand">
+    
 
-    <div id="posts" class="posts-collapse">
-      <div class="collection-title">
-        <h1>样式表相关<small>标签</small>
-        </h1>
-      </div>
+  
 
-      
-        
+  
+  
+  
 
   <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://www.liliancheng.top/2018/08/13/git创建分支以及版本回退/">
 
-      <h2 class="post-title">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="LiLiancheng">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/a2.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="HARRISKING`s Blog">
+    </span>
+
+    
+      <header class="post-header">
+
         
-            <a class="post-title-link" href="/2018/07/27/sass——css预处理入门笔记/" itemprop="url">
-              
-                <span itemprop="name">sass——css预处理入门笔记</span>
-              
-            </a>
         
-      </h2>
+          <h1 class="post-title" itemprop="name headline">git创建分支以及版本回退</h1>
+        
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2018-07-27T14:11:38+08:00"
-              content="2018-07-27" >
-          07-27
-        </time>
-      </div>
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-08-13T19:50:54+08:00">
+                2018-08-13
+              </time>
+            
 
-    </header>
-  </article>
+            
 
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/小知识点总结备忘/" itemprop="url" rel="index">
+                    <span itemprop="name">小知识点总结备忘</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
-        
+      
 
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2018/07/27/less——css预处理语言入门笔记/" itemprop="url">
-              
-                <span itemprop="name">less——css预处理语言入门笔记</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2018-07-27T13:55:41+08:00"
-              content="2018-07-27" >
-          07-27
-        </time>
-      </div>
-
-    </header>
-  </article>
-
+      
+        <blockquote>
+<p>git的一大特点就是可以在一套代码流水线上创建多个分支，这些分支互不影响，但可以在需要时候合并，这对开发者太友好了，具体操作方法整理如下，以备后查！</p>
+</blockquote>
+<h1 id="一，如何创建分支"><a href="#一，如何创建分支" class="headerlink" title="一，如何创建分支"></a>一，如何创建分支</h1><p>现在我要修一条北京通往杭州的公路（为什么要通往杭州，因为我喜欢），我开始拿着铲子一点一点的修，终于修完了开始通车跑。后来我想把这条路的盘山路优化成通山隧道，但是我不能影响现在的公路正常运行啊，所以我运用魔法在平行世界复制了一条一模一样的路，并在平行世界里开始改造这条路，改造好了利用魔法替换现实世界里的路即可，这个平行世界就是git的分支。</p>
+<ul>
+<li>这个开启平行世界魔法就是：<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">//在现实世界（merge中）</span><br><span class="line">git checkout -b [分支名]</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>合并两个世界的魔法是：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">//回到现实世界（merge中）</span><br><span class="line">git merge [平行世界]</span><br></pre></td></tr></table></figure></p>
+<p>删除平行世界的魔法是：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">//在现实世界（merge中）</span><br><span class="line">git branch -d [平行世界]</span><br></pre></td></tr></table></figure></p>
 
       
     </div>
+    
+    
+    
 
+    
+
+    
+
+    
+
+    
+      <div>
+        <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+    
+</div>
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/git操作/" rel="tag"># git操作</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/07/27/奔跑吧，requireJS/" rel="next" title="奔跑吧，requireJS">
+                <i class="fa fa-chevron-left"></i> 奔跑吧，requireJS
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
   </div>
   
   
   
+  </article>
 
-  
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -390,6 +498,15 @@
 
 
           
+
+  
+    <div class="comments" id="comments">
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8zODM5My8xNDkyMQ=="></div>
+    </div>
+
+  
+
+
 
         </div>
         
@@ -410,8 +527,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -509,6 +635,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#一，如何创建分支"><span class="nav-number">1.</span> <span class="nav-text">一，如何创建分支</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -659,6 +801,10 @@
 
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
 
   
 
@@ -687,6 +833,17 @@
 
 
 
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
   
 
 
