@@ -1,0 +1,966 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Roboto Slab:300,300italic,400,400italic,700,700italic|Roboto Slab:300,300italic,400,400italic,700,700italic|Roboto Slab:300,300italic,400,400italic,700,700italic|Roboto Slab:300,300italic,400,400italic,700,700italic|PT Mono:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="事件流之冒泡与捕获," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="React项目中遇到需要阻止冒泡的需求，觉得这是一个之前没有被发现的坑，总结在此，以备后查！  一，背景世纪初的网景与微软公司的浏览器大战想必身为程序员都略有耳闻，冒泡与捕获——两种截然相反的处理事件机制，就是这场战争的主角之一。 123&amp;lt;div class=&amp;apos;s1&amp;apos;&amp;gt;    &amp;lt;p class=&amp;apos;s2&amp;apos;&amp;gt;&amp;lt;/p&amp;gt;&amp;lt">
+<meta name="keywords" content="事件流之冒泡与捕获">
+<meta property="og:type" content="article">
+<meta property="og:title" content="事件流之冒泡与捕获——由react中遇到的冒泡Bug聊起">
+<meta property="og:url" content="http://www.liliancheng.top/2018/08/24/事件流之冒泡与捕获——由react中遇到的冒泡Bug聊起/index.html">
+<meta property="og:site_name" content="HARRISKING`s Blog">
+<meta property="og:description" content="React项目中遇到需要阻止冒泡的需求，觉得这是一个之前没有被发现的坑，总结在此，以备后查！  一，背景世纪初的网景与微软公司的浏览器大战想必身为程序员都略有耳闻，冒泡与捕获——两种截然相反的处理事件机制，就是这场战争的主角之一。 123&amp;lt;div class=&amp;apos;s1&amp;apos;&amp;gt;    &amp;lt;p class=&amp;apos;s2&amp;apos;&amp;gt;&amp;lt;/p&amp;gt;&amp;lt">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://pcpgpxhno.bkt.clouddn.com/153666498.jpg">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3706166-a285be644a5a4025.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3706166-d53354f882eceb44.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/244/format/webp">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3706166-a3d820a799cc471e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/244/format/webp">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3706166-a3d820a799cc471e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/244/format/webp">
+<meta property="og:updated_time" content="2018-08-24T08:33:31.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="事件流之冒泡与捕获——由react中遇到的冒泡Bug聊起">
+<meta name="twitter:description" content="React项目中遇到需要阻止冒泡的需求，觉得这是一个之前没有被发现的坑，总结在此，以备后查！  一，背景世纪初的网景与微软公司的浏览器大战想必身为程序员都略有耳闻，冒泡与捕获——两种截然相反的处理事件机制，就是这场战争的主角之一。 123&amp;lt;div class=&amp;apos;s1&amp;apos;&amp;gt;    &amp;lt;p class=&amp;apos;s2&amp;apos;&amp;gt;&amp;lt;/p&amp;gt;&amp;lt">
+<meta name="twitter:image" content="http://pcpgpxhno.bkt.clouddn.com/153666498.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://www.liliancheng.top/2018/08/24/事件流之冒泡与捕获——由react中遇到的冒泡Bug聊起/"/>
+
+
+
+
+
+  <title>事件流之冒泡与捕获——由react中遇到的冒泡Bug聊起 | HARRISKING`s Blog</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+    <a href="https://github.com/HARRISKING"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub"></a>
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">HARRISKING`s Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">Techblog & Experience</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            时间轴
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            站点介绍
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-search">
+          <a href="/search" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-search"></i> <br />
+            
+            站内搜索
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://www.liliancheng.top/2018/08/24/事件流之冒泡与捕获——由react中遇到的冒泡Bug聊起/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="LiLiancheng">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/a2.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="HARRISKING`s Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">事件流之冒泡与捕获——由react中遇到的冒泡Bug聊起</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-08-24T16:25:03+08:00">
+                2018-08-24
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/小知识点总结备忘/" itemprop="url" rel="index">
+                    <span itemprop="name">小知识点总结备忘</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><img src="http://pcpgpxhno.bkt.clouddn.com/153666498.jpg" alt=""></p>
+<blockquote>
+<p>React项目中遇到需要阻止冒泡的需求，觉得这是一个之前没有被发现的坑，总结在此，以备后查！</p>
+</blockquote>
+<h1 id="一，背景"><a href="#一，背景" class="headerlink" title="一，背景"></a>一，背景</h1><p>世纪初的网景与微软公司的浏览器大战想必身为程序员都略有耳闻，冒泡与捕获——两种截然相反的处理事件机制，就是这场战争的主角之一。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;div class=&apos;s1&apos;&gt;</span><br><span class="line">    &lt;p class=&apos;s2&apos;&gt;&lt;/p&gt;</span><br><span class="line">&lt;/div&gt;</span><br></pre></td></tr></table></figure>
+<hr>
+<a id="more"></a>
+<h1 id="二，冒泡事件及事件捕获"><a href="#二，冒泡事件及事件捕获" class="headerlink" title="二，冒泡事件及事件捕获"></a>二，冒泡事件及事件捕获</h1><ul>
+<li><h2 id="什么是冒泡事件"><a href="#什么是冒泡事件" class="headerlink" title="什么是冒泡事件"></a>什么是冒泡事件</h2></li>
+</ul>
+<p>顾名思义，像是水中冒泡一样，从下往上。事件由第一个被触发的元素接收，然后逐级向上传播。<code>s1</code>、<code>s2</code>同时有点击事件，当点击子元素<code>s2</code>时，会先触发<code>s2</code>再触发<code>s1</code>。<br><img src="http://upload-images.jianshu.io/upload_images/3706166-a285be644a5a4025.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="冒泡示意图"></p>
+<ul>
+<li><h2 id="什么是事件捕获"><a href="#什么是事件捕获" class="headerlink" title="什么是事件捕获"></a>什么是事件捕获</h2></li>
+</ul>
+<p>与冒泡事件相反，是冲上往下。事件由body逐级向下传播，直到到达目标元素。<code>s1</code>、<code>s2</code>同时有点击事件，当点击子元素<code>s2</code>时，会先触发<code>s1</code>再触发<code>s2</code>。<br><img src="https://upload-images.jianshu.io/upload_images/3706166-d53354f882eceb44.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/244/format/webp" alt="捕获示意图"></p>
+<hr>
+<h1 id="三，DOM2之后的世界太平——addEventListener的第三个参数"><a href="#三，DOM2之后的世界太平——addEventListener的第三个参数" class="headerlink" title="三，DOM2之后的世界太平——addEventListener的第三个参数"></a>三，DOM2之后的世界太平——addEventListener的第三个参数</h1><p>网景和微软曾经的战争还是比较火热的，当时， 网景主张捕获方式，微软主张冒泡方式。后来 w3c 采用折中的方式，平息了战火，制定了统一的标准——先捕获再冒泡。<br>addEventListener的第三个参数就是为冒泡和捕获准备的。<br>addEventListener有三个参数：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">element.addEventListener(event, function, useCapture)</span><br><span class="line"></span><br><span class="line">//第一个参数是需要绑定的事件</span><br><span class="line">//第二个参数是触发事件后要执行的函数</span><br><span class="line">//第三个参数默认值是false，表示在事件冒泡阶段调用事件处理函数;如果参数为true，则表示在事件捕获阶段调用处理函数。</span><br></pre></td></tr></table></figure></p>
+<p>w3c说，大家有话好好说，争来争去的干嘛呀，来，用这个，你爱用啥用啥，反正我的事件流固定就是先捕获后冒泡，至于你愿意谁先谁后，你自己注册（就是js里声明的意思）。<br><img src="https://upload-images.jianshu.io/upload_images/3706166-a3d820a799cc471e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/244/format/webp" alt="新的事件流示意图"></p>
+<p>举个例子</p>
+<p>html<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;div id=&quot;s1&quot;&gt;s1</span><br><span class="line">    &lt;div id=&quot;s2&quot;&gt;s2&lt;/div&gt;</span><br><span class="line">&lt;/div&gt;</span><br></pre></td></tr></table></figure></p>
+<p>javaScript<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">&lt;script&gt;</span><br><span class="line">s1.addEventListener(&quot;click&quot;,function(e)&#123;</span><br><span class="line">        console.log(&quot;s1 冒泡事件&quot;);         </span><br><span class="line">&#125;,false);</span><br><span class="line">s2.addEventListener(&quot;click&quot;,function(e)&#123;</span><br><span class="line">        console.log(&quot;s2 冒泡事件&quot;);</span><br><span class="line">&#125;,false);</span><br><span class="line">        </span><br><span class="line">s1.addEventListener(&quot;click&quot;,function(e)&#123;</span><br><span class="line">        console.log(&quot;s1 捕获事件&quot;);</span><br><span class="line">&#125;,true);</span><br><span class="line">        </span><br><span class="line">s2.addEventListener(&quot;click&quot;,function(e)&#123;</span><br><span class="line">        console.log(&quot;s2 捕获事件&quot;);</span><br><span class="line">&#125;,true);</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure></p>
+<p>好，大家跟我拿着这个图一步一步照着看：<br><img src="https://upload-images.jianshu.io/upload_images/3706166-a3d820a799cc471e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/244/format/webp" alt="新的事件流示意图"></p>
+<p>捕获阶段</p>
+<ul>
+<li><p>点击s2（目标节点），click事件从document-&gt;html-&gt;body-&gt;s1-&gt;s2</p>
+</li>
+<li><p>这里在s1上发现了捕获注册事件，则输出”s1 捕获事件”</p>
+</li>
+<li><p>到达s2，已经到达目的节点，</p>
+</li>
+<li><p>s2上注册（在js中声明，下面不一一解释）了冒泡和捕获事件，先注册的冒泡后注册的捕获，则先执行冒泡，输出”s2 冒泡事件”</p>
+</li>
+<li><p>再在s2上执行后注册的事件，即捕获事件，输出”s2 捕获事件”</p>
+</li>
+</ul>
+<p>冒泡阶段</p>
+<ul>
+<li><p>下面进入冒泡阶段，按照s2-&gt;s1-&gt;body-&gt;html-&gt;document</p>
+</li>
+<li><p>在s1上发现了冒泡事件，则输出”s1 冒泡事件”</p>
+</li>
+</ul>
+<hr>
+<h1 id="四，如何停止冒泡事件和阻止浏览器默认行为"><a href="#四，如何停止冒泡事件和阻止浏览器默认行为" class="headerlink" title="四，如何停止冒泡事件和阻止浏览器默认行为"></a>四，如何停止冒泡事件和阻止浏览器默认行为</h1><ul>
+<li><h4 id="e的兼容"><a href="#e的兼容" class="headerlink" title="e的兼容"></a>e的兼容</h4></li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">function fn(e)&#123;</span><br><span class="line">    var event = e || window.event;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>FireFox</code>里的<code>Event</code>跟<code>IE</code>里的不同，<code>IE</code>里的是全局变量，随时可用。<code>FireFox</code>里的要用参数引导才能用，是运行时的临时变量在<code>IE/Opera</code>中是<code>window.event</code>，在<code>FireFox</code>中是<code>event</code>。而事件的对象，在<code>IE</code>中是<code>window.event.srcElement</code>，在Firefox中是<code>event.target</code>，<code>Opera</code>中两者都可用</p>
+<ul>
+<li><h4 id="阻止事件冒泡"><a href="#阻止事件冒泡" class="headerlink" title="阻止事件冒泡"></a>阻止事件冒泡</h4></li>
+</ul>
+<p><code>W3C</code>的方法是<code>e.stopPropagation()</code>，<code>IE</code>则是使用<code>e.cancelBubble = true</code>。<code>stopPropagation</code>是事件对象<code>Event</code>的一个方法，作用是<code>阻止目标元素的冒泡事件</code>，但是<code>不会阻止默认行为</code>。<code>stopPropagation</code>就是阻止目标元素的事件冒泡到父级元素了解更多请点这:<a href="https://blog.luckyw.cn/2015/11/15/dom-event-flow/" target="_blank" rel="noopener">理解DOM中的事件流</a></p>
+<ul>
+<li><h4 id="阻止事件冒泡兼容"><a href="#阻止事件冒泡兼容" class="headerlink" title="阻止事件冒泡兼容:"></a>阻止事件冒泡兼容:</h4></li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">function stopPropagation(e) &#123;</span><br><span class="line">    var e = e || window.event;</span><br><span class="line">    if ( e &amp;&amp; e.stopPropagation )&#123;</span><br><span class="line">        e.stopPropagation();</span><br><span class="line">    &#125;else&#123;</span><br><span class="line">        e.cancelBubble = true;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li><h4 id="阻止浏览器默认行为"><a href="#阻止浏览器默认行为" class="headerlink" title="阻止浏览器默认行为"></a>阻止浏览器默认行为</h4></li>
+</ul>
+<p><code>W3C</code>的方法是<code>e.preventDefault()</code>，<code>IE</code>则是使用<code>e.returnValue = false</code>。<code>preventDefault</code>是事件对象<code>Event</code>的一个方法，作用是取消一个目标元素的默认行为。如果元素没有默认行为，调用无效。什么元素有默认行为呢？如链接<code>&lt;a href=&quot;xxx&quot;&gt;点我&lt;/a&gt;</code>，提交按钮<code>&lt;input type=”submit”&gt;</code>等</p>
+<p><strong>return false</strong>:<br><code>JS</code>的<code>return false</code>只会阻止默认行为，而<code>jQuery</code>则既阻止默认行为又防止对象冒泡</p>
+<p><strong>阻止浏览器默认行为兼容：</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">function stopDefault(e) &#123;</span><br><span class="line">    var e = e || window.event;</span><br><span class="line">    if (e &amp;&amp; e.preventDefault)&#123;</span><br><span class="line">        e.preventDefault();</span><br><span class="line">    &#125;else&#123;</span><br><span class="line">        e.returnValue = false;</span><br><span class="line">    &#125;</span><br><span class="line">    return false;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<hr>
+<h1 id="五，react中采用的事件处理机制及阻止方式"><a href="#五，react中采用的事件处理机制及阻止方式" class="headerlink" title="五，react中采用的事件处理机制及阻止方式"></a>五，react中采用的事件处理机制及阻止方式</h1><p>首先我们要了解react中合成事件和原生事件是什么。</p>
+<ul>
+<li><h4 id="合成事件"><a href="#合成事件" class="headerlink" title="合成事件"></a>合成事件</h4></li>
+</ul>
+<p>在jsx中直接绑定的事件，如</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;a ref=&quot;aaa&quot; onClick=&#123;(e)=&gt;this.handleClick(e)&#125;&gt;更新&lt;/a&gt;</span><br></pre></td></tr></table></figure>
+<p>这里的handleClick事件就是合成事件</p>
+<ul>
+<li><h4 id="原生事件"><a href="#原生事件" class="headerlink" title="原生事件"></a>原生事件</h4></li>
+</ul>
+<p>通过js原生代码绑定的事件，如</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">document.body.addEventListener(&apos;click&apos;,e=&gt;&#123;</span><br><span class="line">    // 通过e.target判断阻止冒泡</span><br><span class="line">    if(e.target&amp;&amp;e.target.matches(&apos;a&apos;))&#123;</span><br><span class="line">        return;</span><br><span class="line">    &#125;</span><br><span class="line">    console.log(&apos;body&apos;);</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p>或者<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">this.refs.update.addEventListener(&apos;click&apos;,e=&gt;&#123;</span><br><span class="line">    console.log(&apos;update&apos;);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li><h4 id="阻止冒泡事件分三种情况"><a href="#阻止冒泡事件分三种情况" class="headerlink" title="阻止冒泡事件分三种情况"></a>阻止冒泡事件分三种情况</h4></li>
+</ul>
+<p>A、阻止合成事件间的冒泡，用e.stopPropagation();<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">import React,&#123; Component &#125; from &apos;react&apos;;</span><br><span class="line">import ReactDOM,&#123;findDOMNode&#125; from &apos;react-dom&apos;;</span><br><span class="line"></span><br><span class="line">class Counter extends Component&#123;</span><br><span class="line">    constructor(props)&#123;</span><br><span class="line">        super(props);</span><br><span class="line">        this.state = &#123;</span><br><span class="line">            count:0,</span><br><span class="line">        &#125;   </span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    handleClick(e)&#123;</span><br><span class="line">        // 阻止合成事件间的冒泡</span><br><span class="line">        e.stopPropagation();</span><br><span class="line">        this.setState(&#123;count:++this.state.count&#125;);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    testClick()&#123;</span><br><span class="line">        console.log(&apos;test&apos;)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    render()&#123;</span><br><span class="line">        return(</span><br><span class="line">            &lt;div ref=&quot;test&quot; onClick=&#123;()=&gt;this.testClick()&#125;&gt;</span><br><span class="line">                &lt;p&gt;&#123;this.state.count&#125;&lt;/p&gt;</span><br><span class="line">                &lt;a ref=&quot;update&quot; onClick=&#123;(e)=&gt;this.handleClick(e)&#125;&gt;更新&lt;/a&gt;</span><br><span class="line">            &lt;/div&gt;</span><br><span class="line">        )</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">var div1 = document.getElementById(&apos;content&apos;);</span><br><span class="line"></span><br><span class="line">ReactDOM.render(&lt;Counter/&gt;,div1,()=&gt;&#123;&#125;);</span><br></pre></td></tr></table></figure></p>
+<p>B、阻止合成事件与最外层document上的事件间的冒泡，用e.nativeEvent.stopImmediatePropagation();<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">import React,&#123; Component &#125; from &apos;react&apos;;</span><br><span class="line">import ReactDOM,&#123;findDOMNode&#125; from &apos;react-dom&apos;;</span><br><span class="line"></span><br><span class="line">class Counter extends Component&#123;</span><br><span class="line">    constructor(props)&#123;</span><br><span class="line">        super(props);</span><br><span class="line">        this.state = &#123;</span><br><span class="line">            count:0,</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    handleClick(e)&#123;</span><br><span class="line">        // 阻止合成事件与最外层document上的事件间的冒泡</span><br><span class="line">        e.nativeEvent.stopImmediatePropagation();</span><br><span class="line">        this.setState(&#123;count:++this.state.count&#125;);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    render()&#123;</span><br><span class="line">        return(</span><br><span class="line">            &lt;div ref=&quot;test&quot;&gt;</span><br><span class="line">                &lt;p&gt;&#123;this.state.count&#125;&lt;/p&gt;</span><br><span class="line">                &lt;a ref=&quot;update&quot; onClick=&#123;(e)=&gt;this.handleClick(e)&#125;&gt;更新&lt;/a&gt;</span><br><span class="line">            &lt;/div&gt;</span><br><span class="line">        )</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    componentDidMount() &#123;</span><br><span class="line">        document.addEventListener(&apos;click&apos;, () =&gt; &#123;</span><br><span class="line">            console.log(&apos;document&apos;);</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">var div1 = document.getElementById(&apos;content&apos;);</span><br><span class="line"></span><br><span class="line">ReactDOM.render(&lt;Counter/&gt;,div1,()=&gt;&#123;&#125;);</span><br></pre></td></tr></table></figure></p>
+<p>C、阻止合成事件与除最外层document上的原生事件上的冒泡，通过判断e.target来避免<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">import React,&#123; Component &#125; from &apos;react&apos;;</span><br><span class="line">import ReactDOM,&#123;findDOMNode&#125; from &apos;react-dom&apos;;</span><br><span class="line"></span><br><span class="line">class Counter extends Component&#123;</span><br><span class="line">    constructor(props)&#123;</span><br><span class="line">        super(props);</span><br><span class="line">        this.state = &#123;</span><br><span class="line">            count:0,</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    handleClick(e)&#123;</span><br><span class="line">        this.setState(&#123;count:++this.state.count&#125;);</span><br><span class="line">    &#125;</span><br><span class="line">    render()&#123;</span><br><span class="line">        return(</span><br><span class="line">            &lt;div ref=&quot;test&quot;&gt;</span><br><span class="line">                &lt;p&gt;&#123;this.state.count&#125;&lt;/p&gt;</span><br><span class="line">                &lt;a ref=&quot;update&quot; onClick=&#123;(e)=&gt;this.handleClick(e)&#125;&gt;更新&lt;/a&gt;</span><br><span class="line">            &lt;/div&gt;</span><br><span class="line">        )</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    componentDidMount() &#123;</span><br><span class="line">        document.body.addEventListener(&apos;click&apos;,e=&gt;&#123;</span><br><span class="line">            // 通过e.target判断阻止冒泡</span><br><span class="line">            if(e.target&amp;&amp;e.target.matches(&apos;a&apos;))&#123;</span><br><span class="line">                return;</span><br><span class="line">            &#125;</span><br><span class="line">            console.log(&apos;body&apos;);</span><br><span class="line">        &#125;)</span><br><span class="line">    &#125;   </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">var div1 = document.getElementById(&apos;content&apos;);</span><br><span class="line"></span><br><span class="line">ReactDOM.render(&lt;Counter/&gt;,div1,()=&gt;&#123;&#125;);</span><br></pre></td></tr></table></figure></p>
+<h1 id="六，参考文章："><a href="#六，参考文章：" class="headerlink" title="六，参考文章："></a>六，参考文章：</h1><ul>
+<li><a href="https://segmentfault.com/a/1190000005654451" target="_blank" rel="noopener">JS中事件冒泡与捕获</a></li>
+<li><a href="https://zhuanlan.zhihu.com/p/26742034" target="_blank" rel="noopener">react阻止冒泡事件，绝对干货</a></li>
+</ul>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    
+      <div>
+        <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+    
+</div>
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/事件流之冒泡与捕获/" rel="tag"># 事件流之冒泡与捕获</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/08/21/npm-run-时候遇到的报错及解决措施/" rel="next" title="npm run 时候遇到的报错及解决措施">
+                <i class="fa fa-chevron-left"></i> npm run 时候遇到的报错及解决措施
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8zODM5My8xNDkyMQ=="></div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/a2.jpeg"
+                alt="LiLiancheng" />
+            
+              <p class="site-author-name" itemprop="name">LiLiancheng</p>
+              <p class="site-description motion-element" itemprop="description">知道做不到，等于不知道</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">8</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">5</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">7</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.jianshu.com/u/095fb78b6440" target="_blank" title="简书博客">
+                      
+                        <i class="fa fa-fw fa-spinner"></i>简书博客</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/HARRISKING" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-block">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                我推荐的好文章
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://zhuanlan.zhihu.com/p/19743861?columnSlug=cnfeat" title="为什么你要写博客？" target="_blank">为什么你要写博客？</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://mp.weixin.qq.com/s?__biz=MzA4NTQwNDcyMA==&mid=402564613&idx=1&sn=d2b7c75b11046a0dcf8df77e737d2b4c#rd" title="我为什么坚持写博客？" target="_blank">我为什么坚持写博客？</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#一，背景"><span class="nav-number">1.</span> <span class="nav-text">一，背景</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#二，冒泡事件及事件捕获"><span class="nav-number">2.</span> <span class="nav-text">二，冒泡事件及事件捕获</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#什么是冒泡事件"><span class="nav-number">2.1.</span> <span class="nav-text">什么是冒泡事件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#什么是事件捕获"><span class="nav-number">2.2.</span> <span class="nav-text">什么是事件捕获</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#三，DOM2之后的世界太平——addEventListener的第三个参数"><span class="nav-number">3.</span> <span class="nav-text">三，DOM2之后的世界太平——addEventListener的第三个参数</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#四，如何停止冒泡事件和阻止浏览器默认行为"><span class="nav-number">4.</span> <span class="nav-text">四，如何停止冒泡事件和阻止浏览器默认行为</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#e的兼容"><span class="nav-number">4.0.0.1.</span> <span class="nav-text">e的兼容</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#阻止事件冒泡"><span class="nav-number">4.0.0.2.</span> <span class="nav-text">阻止事件冒泡</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#阻止事件冒泡兼容"><span class="nav-number">4.0.0.3.</span> <span class="nav-text">阻止事件冒泡兼容:</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#阻止浏览器默认行为"><span class="nav-number">4.0.0.4.</span> <span class="nav-text">阻止浏览器默认行为</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#五，react中采用的事件处理机制及阻止方式"><span class="nav-number">5.</span> <span class="nav-text">五，react中采用的事件处理机制及阻止方式</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#合成事件"><span class="nav-number">5.0.0.1.</span> <span class="nav-text">合成事件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#原生事件"><span class="nav-number">5.0.0.2.</span> <span class="nav-text">原生事件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#阻止冒泡事件分三种情况"><span class="nav-number">5.0.0.3.</span> <span class="nav-text">阻止冒泡事件分三种情况</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#六，参考文章："><span class="nav-number">6.</span> <span class="nav-text">六，参考文章：</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">LiLiancheng</span>
+
+  
+</div>
+
+
+
+<div class="powered-by">
+<i class="fa fa-user-md"></i><span id="busuanzi_container_site_uv">
+  本站访客数:<span id="busuanzi_value_site_uv"></span>
+</span>
+</div>
+
+
+
+
+
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
