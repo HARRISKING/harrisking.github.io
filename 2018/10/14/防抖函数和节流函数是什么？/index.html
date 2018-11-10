@@ -129,18 +129,18 @@
 
 
 
-<meta name="description" content="什么是防抖函数JavaScript中由于函数调用太过频繁而预先设置一个时间间隔，如果超过这个间隔函数没有被调用，才真正开始执行，否则不执行继续等待之后的调用的设计，被称为函数防抖（debounce）。 什么是节流函数函数节流就是当目标函数被连续频繁调用时，目标函数并不会每次调用都被执行，而是间隔一个设定好的时间再执行。 参考文章 JS简单实现防抖和节流 事件防抖和事件节流">
+<meta name="description" content="什么是防抖函数JavaScript中由于函数调用太过频繁而预先设置一个时间间隔，如果超过这个间隔函数没有被调用，才真正开始执行，否则不执行继续等待之后的调用的设计，被称为函数防抖（debounce）。 函数防抖的简单实现: 123456789101112const debounce = ( func, wait=500 ) =&amp;gt; &amp;#123;  let timer;  return func">
 <meta name="keywords" content="知识点整理">
 <meta property="og:type" content="article">
 <meta property="og:title" content="防抖函数和节流函数是什么？">
 <meta property="og:url" content="http://www.liliancheng.top/2018/10/14/防抖函数和节流函数是什么？/index.html">
 <meta property="og:site_name" content="HARRISKING`s Blog">
-<meta property="og:description" content="什么是防抖函数JavaScript中由于函数调用太过频繁而预先设置一个时间间隔，如果超过这个间隔函数没有被调用，才真正开始执行，否则不执行继续等待之后的调用的设计，被称为函数防抖（debounce）。 什么是节流函数函数节流就是当目标函数被连续频繁调用时，目标函数并不会每次调用都被执行，而是间隔一个设定好的时间再执行。 参考文章 JS简单实现防抖和节流 事件防抖和事件节流">
+<meta property="og:description" content="什么是防抖函数JavaScript中由于函数调用太过频繁而预先设置一个时间间隔，如果超过这个间隔函数没有被调用，才真正开始执行，否则不执行继续等待之后的调用的设计，被称为函数防抖（debounce）。 函数防抖的简单实现: 123456789101112const debounce = ( func, wait=500 ) =&amp;gt; &amp;#123;  let timer;  return func">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-10-14T03:30:38.000Z">
+<meta property="og:updated_time" content="2018-10-14T05:21:46.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="防抖函数和节流函数是什么？">
-<meta name="twitter:description" content="什么是防抖函数JavaScript中由于函数调用太过频繁而预先设置一个时间间隔，如果超过这个间隔函数没有被调用，才真正开始执行，否则不执行继续等待之后的调用的设计，被称为函数防抖（debounce）。 什么是节流函数函数节流就是当目标函数被连续频繁调用时，目标函数并不会每次调用都被执行，而是间隔一个设定好的时间再执行。 参考文章 JS简单实现防抖和节流 事件防抖和事件节流">
+<meta name="twitter:description" content="什么是防抖函数JavaScript中由于函数调用太过频繁而预先设置一个时间间隔，如果超过这个间隔函数没有被调用，才真正开始执行，否则不执行继续等待之后的调用的设计，被称为函数防抖（debounce）。 函数防抖的简单实现: 123456789101112const debounce = ( func, wait=500 ) =&amp;gt; &amp;#123;  let timer;  return func">
 
 
 
@@ -413,7 +413,18 @@
 
       
         <h4 id="什么是防抖函数"><a href="#什么是防抖函数" class="headerlink" title="什么是防抖函数"></a>什么是防抖函数</h4><p>JavaScript中由于函数调用太过频繁而预先设置一个时间间隔，如果超过这个间隔函数没有被调用，才真正开始执行，否则不执行继续等待之后的调用的设计，被称为函数防抖（debounce）。</p>
+<p>函数防抖的简单实现:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">const debounce = ( func, wait=500 ) =&gt; &#123;</span><br><span class="line">  let timer;</span><br><span class="line">  return function(...param)&#123;</span><br><span class="line">    clearTimeout(timer)</span><br><span class="line">    timer = setTimeout( ()=&gt;&#123;</span><br><span class="line">      func.call(this,...param) //参数写法解释在下面</span><br><span class="line">    &#125;,wait )</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">&#125;</span><br><span class="line">//当屏幕尺寸变化时</span><br><span class="line">window.onresize = debounce(e =&gt; console.log(&apos;hello world&apos;), 2000);</span><br></pre></td></tr></table></figure>
+<a id="more"></a>
+<p>debounce函数接收2个参数，第1个是需要防抖的目标函数，第2个是防抖等待的时间wait（默认值100ms）。debounce是一个闭包，它返回的函数有一个私有变量timeout，当函数每次触发时，timeout都被清除一次，然后重新设置一个新的定时器，用于执行防抖目标函数，定时器等待的时间是wait毫秒。</p>
+<p>接着测试window.onresize事件，尝试改变浏览器窗口的大小，会发现无论改变窗口的速度多快，只要500ms内又重新改变了窗口，之前触发的逻辑都不会被执行。</p>
+<p>window.onresize = debounce(e =&gt; console.log(‘hello world’), 500);<br>除此之外，还可以测试目标函数执行的上下文（this和函数参数），这里可以尝试在目标函数中输出this和e试试，会发现和正常情况下（不适用debounce绑定目标函数）一样，this和函数参数都能被正常使用。</p>
+<p>这是因为debounce中返回的是一般的函数声明而没有用箭头函数，而里面的setTimeout却是箭头函数，这样就保证了防抖目标函数被调用时的上下文和正常情况下一样。</p>
 <h4 id="什么是节流函数"><a href="#什么是节流函数" class="headerlink" title="什么是节流函数"></a>什么是节流函数</h4><p>函数节流就是当目标函数被连续频繁调用时，目标函数并不会每次调用都被执行，而是间隔一个设定好的时间再执行。</p>
+<p>函数节流的简单实现:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">const throttle = (func, wait = 50) =&gt; &#123;</span><br><span class="line">  var lastCall = Date.now();</span><br><span class="line">  return function(...args) &#123;</span><br><span class="line">    const now = Date.now();</span><br><span class="line">    if (now - lastCall &gt; wait) &#123;</span><br><span class="line">      func.call(this, ...args); //参数写法解释在下面</span><br><span class="line">      lastCall = now;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;;</span><br><span class="line">//当鼠标经过时</span><br><span class="line">document.body.onmousemove = throttle(e =&gt; &#123;</span><br><span class="line">    console.log(&apos;hello world&apos;);</span><br><span class="line">&#125;, 200);</span><br></pre></td></tr></table></figure>
+<p>这里创建一个函数节流的简单实现，每次调用都记录一下当前时间，看看是否和上次调用的时间差是否大于指定的时间差，如果大于则调用目标函数，并且记录当前时间为新的上一次调用时间。</p>
+<p>这是同一类问题的两种解决方法，以备后查！</p>
 <h4 id="参考文章"><a href="#参考文章" class="headerlink" title="参考文章"></a>参考文章</h4><ul>
 <li><a href="https://segmentfault.com/a/1190000015857221" target="_blank" rel="noopener">JS简单实现防抖和节流</a></li>
 <li><a href="https://oychao.github.io/2017/10/17/javascript/31_throttle_and_debounce/" target="_blank" rel="noopener">事件防抖和事件节流</a></li>
@@ -468,8 +479,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2018/10/14/数组去重至少三种方法？/" rel="prev" title="数组去重至少三种方法？">
-                数组去重至少三种方法？ <i class="fa fa-chevron-right"></i>
+              <a href="/2018/10/14/数组去重至少三种方法？/" rel="prev" title="数组去重的方法汇总">
+                数组去重的方法汇总 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -556,7 +567,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">19</span>
+                  <span class="site-state-item-count">20</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
