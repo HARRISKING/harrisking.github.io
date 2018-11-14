@@ -137,7 +137,7 @@
 <meta property="og:site_name" content="HARRISKING`s Blog">
 <meta property="og:description" content="一，什么是正则表达式是计算机科学的一个概念。正则表达式使用单个字符串来描述、匹配一系列匹配某个句法规则的字符串。在很多文本编辑器里，正则表达式通常被用来检索、替换那些匹配某个模式的文本。 二，创建方法 方法一：构造函数1var regExp = new RegExp(&amp;apos;harrisking&amp;apos;,&amp;apos;g&amp;apos;) // 得到的结果：/harrisking/g">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-11-13T09:51:27.000Z">
+<meta property="og:updated_time" content="2018-11-14T03:38:34.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="正则表达式知识点整理">
 <meta name="twitter:description" content="一，什么是正则表达式是计算机科学的一个概念。正则表达式使用单个字符串来描述、匹配一系列匹配某个句法规则的字符串。在很多文本编辑器里，正则表达式通常被用来检索、替换那些匹配某个模式的文本。 二，创建方法 方法一：构造函数1var regExp = new RegExp(&amp;apos;harrisking&amp;apos;,&amp;apos;g&amp;apos;) // 得到的结果：/harrisking/g">
@@ -425,8 +425,70 @@
 <blockquote>
 <p>有没有发现这两种形式结果是一样的</p>
 </blockquote>
-<h2 id="三，具体规则"><a href="#三，具体规则" class="headerlink" title="三，具体规则"></a>三，具体规则</h2><h3 id="（一）修饰符"><a href="#（一）修饰符" class="headerlink" title="（一）修饰符"></a>（一）修饰符</h3><p>常用：<br>|对象|单词|用法|<br>|:-:|:-:|:-:|<br>|g|global|全文搜索，不添加的话搜索到第一个结果停止搜索|<br>|i|ignore case|忽略大小写，默认大小写敏感|<br>|m|multiple line|多行搜索|<br>|s||特殊字符圆点<code>.</code>中包含换行符,特殊字符圆点<code>.</code>中包含换行符|</p>
-<p>其他：<br>|U||只匹配最近的一个字符串,不重复匹配|<br>|:-:|:-:|:-:|<br>|x||修正符:将模式中的空白忽略|<br>|A||强制从目标字符串开头匹配;|<br>|D||如果使用$限制结尾字符,则不允许结尾有换行|<br>|e||如果使用$限制结尾字符,则不允许结尾有换行|</p>
+<h2 id="三，具体规则"><a href="#三，具体规则" class="headerlink" title="三，具体规则"></a>三，具体规则</h2><h3 id="（一）修饰符"><a href="#（一）修饰符" class="headerlink" title="（一）修饰符"></a>（一）修饰符</h3><p>常用：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">对象</th>
+<th style="text-align:center">单词</th>
+<th style="text-align:center">用法</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">g</td>
+<td style="text-align:center">global</td>
+<td style="text-align:center">全文搜索，不添加的话搜索到第一个结果停止搜索</td>
+</tr>
+<tr>
+<td style="text-align:center">i</td>
+<td style="text-align:center">ignore case</td>
+<td style="text-align:center">忽略大小写，默认大小写敏感</td>
+</tr>
+<tr>
+<td style="text-align:center">m</td>
+<td style="text-align:center">multiple line</td>
+<td style="text-align:center">多行搜索</td>
+</tr>
+<tr>
+<td style="text-align:center">s</td>
+<td style="text-align:center"></td>
+<td style="text-align:center">特殊字符圆点<code>.</code>中包含换行符,特殊字符圆点<code>.</code>中包含换行符</td>
+</tr>
+</tbody>
+</table>
+<p>其他：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">U</th>
+<th style="text-align:center"></th>
+<th style="text-align:center">只匹配最近的一个字符串,不重复匹配</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">x</td>
+<td style="text-align:center"></td>
+<td style="text-align:center">修正符:将模式中的空白忽略</td>
+</tr>
+<tr>
+<td style="text-align:center">A</td>
+<td style="text-align:center"></td>
+<td style="text-align:center">强制从目标字符串开头匹配;</td>
+</tr>
+<tr>
+<td style="text-align:center">D</td>
+<td style="text-align:center"></td>
+<td style="text-align:center">如果使用$限制结尾字符,则不允许结尾有换行</td>
+</tr>
+<tr>
+<td style="text-align:center">e</td>
+<td style="text-align:center"></td>
+<td style="text-align:center">如果使用$限制结尾字符,则不允许结尾有换行</td>
+</tr>
+</tbody>
+</table>
 <h3 id="二-正则方法-未完待续。。。"><a href="#二-正则方法-未完待续。。。" class="headerlink" title="(二) 正则方法(未完待续。。。)"></a>(二) 正则方法(未完待续。。。)</h3><p>正则表达式自有方法：</p>
 <table>
 <thead>
@@ -446,7 +508,33 @@
 </tr>
 </tbody>
 </table>
-<p>支持正则表达式的<code>String</code>对象的方法有：<br> |名称|用法|<br> |:-:|:-:|<br>|search|检索与正则表达式相匹配的值|<br>|match|找到一个或多个正则表达式的匹配|<br>|replace|替换与正则表达式匹配的子串|<br>|split|把字符串分割为字符串数组|</p>
+<p>支持正则表达式的<code>String</code>对象的方法有：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">名称</th>
+<th style="text-align:center">用法</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">search</td>
+<td style="text-align:center">检索与正则表达式相匹配的值</td>
+</tr>
+<tr>
+<td style="text-align:center">match</td>
+<td style="text-align:center">找到一个或多个正则表达式的匹配</td>
+</tr>
+<tr>
+<td style="text-align:center">replace</td>
+<td style="text-align:center">替换与正则表达式匹配的子串</td>
+</tr>
+<tr>
+<td style="text-align:center">split</td>
+<td style="text-align:center">把字符串分割为字符串数组</td>
+</tr>
+</tbody>
+</table>
 <h3 id="（三）预定义类、边界及量词"><a href="#（三）预定义类、边界及量词" class="headerlink" title="（三）预定义类、边界及量词"></a>（三）预定义类、边界及量词</h3><ul>
 <li>预定义类：</li>
 </ul>
@@ -497,10 +585,36 @@
 </tbody>
 </table>
 <ul>
-<li><p>边界类：<br>|名称|用法|<br>|:-:|:-:|<br>|^|以…开始|<br>|$|以…结束|<br>|\b|单词边界|<br>|\B|非单词边界|</p>
-</li>
-<li><p>量词：</p>
-</li>
+<li>边界类：</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">名称</th>
+<th style="text-align:center">用法</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">^</td>
+<td style="text-align:center">以…开始</td>
+</tr>
+<tr>
+<td style="text-align:center">$</td>
+<td style="text-align:center">以…结束</td>
+</tr>
+<tr>
+<td style="text-align:center">\b</td>
+<td style="text-align:center">单词边界</td>
+</tr>
+<tr>
+<td style="text-align:center">\B</td>
+<td style="text-align:center">非单词边界</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>量词：</li>
 </ul>
 <table>
 <thead>
