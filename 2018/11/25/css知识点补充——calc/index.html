@@ -129,18 +129,18 @@
 
 
 
-<meta name="description" content="最近遇到需求，需要使用css3的animation实现div从容器左侧移动到右侧，由于容器宽度未知，所以很苦恼如何实现获取右边的移动距离，这个css方法可以实现。  这个方法就是：calc()上代码：  html:   css:   .box{  width:100px;  height: 100px;  border: 1px solid;  position: relative;} .inn">
+<meta name="description" content="最近遇到需求，需要使用css3的animation实现div从容器左侧移动到右侧，由于容器宽度未知，所以很苦恼如何实现获取右边的移动距离，这个css方法可以实现。  这个方法就是：calc()上代码：  html:  &amp;lt;body&amp;gt; &amp;lt;div class=&amp;quot;box&amp;quot;&amp;gt;   &amp;lt;div class=&amp;quot;inner&amp;quot;&amp;gt;&amp;lt;/d">
 <meta name="keywords" content="知识点整理">
 <meta property="og:type" content="article">
 <meta property="og:title" content="css知识点补充——calc">
 <meta property="og:url" content="http://www.liliancheng.top/2018/11/25/css知识点补充——calc/index.html">
 <meta property="og:site_name" content="HARRISKING`s Blog">
-<meta property="og:description" content="最近遇到需求，需要使用css3的animation实现div从容器左侧移动到右侧，由于容器宽度未知，所以很苦恼如何实现获取右边的移动距离，这个css方法可以实现。  这个方法就是：calc()上代码：  html:   css:   .box{  width:100px;  height: 100px;  border: 1px solid;  position: relative;} .inn">
+<meta property="og:description" content="最近遇到需求，需要使用css3的animation实现div从容器左侧移动到右侧，由于容器宽度未知，所以很苦恼如何实现获取右边的移动距离，这个css方法可以实现。  这个方法就是：calc()上代码：  html:  &amp;lt;body&amp;gt; &amp;lt;div class=&amp;quot;box&amp;quot;&amp;gt;   &amp;lt;div class=&amp;quot;inner&amp;quot;&amp;gt;&amp;lt;/d">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-11-26T09:03:26.000Z">
+<meta property="og:updated_time" content="2018-11-26T09:06:29.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="css知识点补充——calc">
-<meta name="twitter:description" content="最近遇到需求，需要使用css3的animation实现div从容器左侧移动到右侧，由于容器宽度未知，所以很苦恼如何实现获取右边的移动距离，这个css方法可以实现。  这个方法就是：calc()上代码：  html:   css:   .box{  width:100px;  height: 100px;  border: 1px solid;  position: relative;} .inn">
+<meta name="twitter:description" content="最近遇到需求，需要使用css3的animation实现div从容器左侧移动到右侧，由于容器宽度未知，所以很苦恼如何实现获取右边的移动距离，这个css方法可以实现。  这个方法就是：calc()上代码：  html:  &amp;lt;body&amp;gt; &amp;lt;div class=&amp;quot;box&amp;quot;&amp;gt;   &amp;lt;div class=&amp;quot;inner&amp;quot;&amp;gt;&amp;lt;/d">
 
 
 
@@ -417,17 +417,42 @@
 </blockquote>
 <h3 id="这个方法就是：calc"><a href="#这个方法就是：calc" class="headerlink" title="这个方法就是：calc()"></a>这个方法就是：calc()</h3><p>上代码：</p>
 <ul>
-<li><p>html:</p>
-<body><br><div class="box"><br><div class="inner"></div><br></div><br></body>
-</li>
-<li><p>css:</p>
-</li>
+<li>html:</li>
 </ul>
-<p>.box{<br>  width:100px;<br>  height: 100px;<br>  border: 1px solid;<br>  position: relative;<br>}</p>
-<p>.inner{<br>    position: absolute;<br>    background: yellow;<br>    width:30px;<br>    height: 30px;<br>    animation: animate 1s;<br>}</p>
-<a id="more"></a>
-<p>@keyframes animate{<br>  from{<br>    background: red;<br>    left: 0px;<br>  }<br>  to{<br>    background: green;<br>    left: calc(100% - 30px);<br>  }<br>}<br><code>`</code></p>
-<h3 id="TIP"><a href="#TIP" class="headerlink" title="TIP:"></a>TIP:</h3><p>calc()方法中，运算符的优先级遵循运算优先级，并且运算符前后要有空格才能生效。</p>
+<pre><code>&lt;body&gt;
+&lt;div class=&quot;box&quot;&gt;
+  &lt;div class=&quot;inner&quot;&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;/body&gt;
+</code></pre><ul>
+<li><p>css:</p>
+<p>  .box{</p>
+<pre><code>width:100px;
+height: 100px;
+border: 1px solid;
+position: relative;
+</code></pre><p>  }</p>
+<p>  .inner{</p>
+<pre><code>position: absolute;
+background: yellow;
+width:30px;
+height: 30px;
+animation: animate 1s;
+</code></pre><p>  }</p>
+  <a id="more"></a>
+<p>  @keyframes animate{</p>
+<pre><code>from{
+  background: red;
+  left: 0px;
+}
+to{
+  background: green;
+  left: calc(100% - 30px);
+}
+</code></pre><p>  }<br><code>`</code></p>
+<h3 id="TIP"><a href="#TIP" class="headerlink" title="TIP:"></a>TIP:</h3></li>
+</ul>
+<p>calc()方法中，运算符的优先级遵循运算优先级，并且运算符前后要有空格才能生效。</p>
 
       
     </div>
